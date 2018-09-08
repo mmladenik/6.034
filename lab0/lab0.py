@@ -82,8 +82,13 @@ def primes_up_to(x):
 
 def fibonacci(n):
     """Given a positive int n, uses recursion to return the nth Fibonacci number."""
-    raise NotImplementedError
-#stupid Recursion
+    if n <0 or type(n) == float:
+        raise ValueError("fibonacci: input must not be negative")
+    elif n<2:
+        return n
+    return fibonacci(n-2)+fibonacci(n-1)
+
+
 def expression_depth(expr):
     """Given an expression expressed as Python lists, uses recursion to return
     the depth of the expression, where depth is defined by the maximum number of
@@ -184,7 +189,7 @@ PYTHON_EXPERIENCE = "B"
 # Finally, the following questions will appear at the end of every lab.
 # The first three are required in order to receive full credit for your lab.
 
-NAME = Monica Mladenik
+NAME = "Monica Mladenik"
 COLLABORATORS = None
 HOW_MANY_HOURS_THIS_LAB_TOOK = None
 SUGGESTIONS = None #optional
