@@ -88,7 +88,6 @@ def fibonacci(n):
         return n
     return fibonacci(n-2)+fibonacci(n-1)
 
-
 def expression_depth(expr):
     """Given an expression expressed as Python lists, uses recursion to return
     the depth of the expression, where depth is defined by the maximum number of
@@ -102,7 +101,13 @@ def remove_from_string(string, letters):
     """Given an original string and a string of letters, returns a new string
     which is the same as the old one except all occurrences of those letters
     have been removed from it."""
-    raise NotImplementedError
+    letters = list(letters)
+    string = list(string)
+    for i in string[::-1]:
+        if i in letters:
+            string.remove(i)
+    return ''.join(string)
+
 
 def compute_string_properties(string):
     """Given a string of lowercase letters, returns a tuple containing the
