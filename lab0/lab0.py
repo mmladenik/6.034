@@ -117,27 +117,32 @@ def compute_string_properties(string):
            any), sorted in REVERSE alphabetical order
         2. The number of distinct characters in the string (hint: use a set)
     """
-    raise NotImplementedError
+    return (len(string), sorted(string, reverse=True), len(set(string)));
 
 def tally_letters(string):
     """Given a string of lowercase letters, returns a dictionary mapping each
     letter to the number of times it occurs in the string."""
-    raise NotImplementedError
-
+    return {x: string.count(x) for x in set(string)}
 
 #### Functions that return functions ###########################################
 
 def create_multiplier_function(m):
     """Given a multiplier m, returns a function that multiplies its input by m."""
-    raise NotImplementedError
+    def my_multiplier_fn(n):
+        return n*m
+    return my_multiplier_fn
 
 def create_length_comparer_function(check_equal):
     """Returns a function that takes as input two lists. If check_equal == True,
     this function will check if the lists are of equal lengths. If
     check_equal == False, this function will check if the lists are of different
     lengths."""
-    raise NotImplementedError
-
+    def length_comparer_fn(n, m):
+        if check_equal ==True:
+            return (len(n) == len(m))
+        else:
+            return (len(n) != len(m))
+    return length_comparer_fn
 
 #### Objects and APIs: Copying and modifying objects ############################
 
