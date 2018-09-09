@@ -149,13 +149,25 @@ def create_length_comparer_function(check_equal):
 def sum_of_coordinates(point):
     """Given a 2D point (represented as a Point object), returns the sum
     of its X- and Y-coordinates."""
-    raise NotImplementedError
+    return point.getX() +point.getY()
 
 def get_neighbors(point):
     """Given a 2D point (represented as a Point object), returns a list of the
     four points that neighbor it in the four coordinate directions. Uses the
     "copy" method to avoid modifying the original point."""
-    raise NotImplementedError
+    x = point.getX()
+    y = point.getY()
+#    point_copy1 = point.copy()
+#    point_copy2 = point.copy()
+#    point_copy3 = point.copy()
+#    point_copy4 = point.copy()
+#    return [point_copy1.setX(x-1), point_copy2.setX(x+1), point_copy3.setY(y-1), point_copy4.setY(y+1)]
+    neighbors = []
+    for i in range(-1,2, 2):
+        point_copyx = point.copy()
+        point_copyy = point.copy()
+        neighbors.extend([point_copyx.setX(x+i), point_copyy.setY(y+i)])
+    return neighbors
 
 
 #### Using the "key" argument ##################################################
