@@ -92,8 +92,13 @@ def expression_depth(expr):
     """Given an expression expressed as Python lists, uses recursion to return
     the depth of the expression, where depth is defined by the maximum number of
     nested operations."""
-    raise NotImplementedError
-
+    depth = 0
+    if not isinstance(expr, list):
+        return 0
+    else:
+        for elem in expr:
+            depth = max(depth, expression_depth(elem))
+        return depth+1
 
 #### Built-in data types #######################################################
 
@@ -155,20 +160,12 @@ def get_neighbors(point):
     """Given a 2D point (represented as a Point object), returns a list of the
     four points that neighbor it in the four coordinate directions. Uses the
     "copy" method to avoid modifying the original point."""
-    x = point.getX()
-    y = point.getY()
-#    point_copy1 = point.copy()
-#    point_copy2 = point.copy()
-#    point_copy3 = point.copy()
-#    point_copy4 = point.copy()
-#    return [point_copy1.setX(x-1), point_copy2.setX(x+1), point_copy3.setY(y-1), point_copy4.setY(y+1)]
     neighbors = []
     for i in range(-1,2, 2):
         point_copyx = point.copy()
         point_copyy = point.copy()
-        neighbors.extend([point_copyx.setX(x+i), point_copyy.setY(y+i)])
+        neighbors.extend([point_copyx.setX(point.getX()+i), point_copyy.setY(point.getY()+i)])
     return neighbors
-
 
 #### Using the "key" argument ##################################################
 
@@ -177,13 +174,15 @@ def sort_points_by_Y(list_of_points):
     with the "key" argument to create and return a list of the SAME (not copied)
     points sorted in decreasing order based on their Y coordinates, without
     modifying the original list."""
-    raise NotImplementedError
+    my_sorting_function = lambda point: point.getY()
+    return sorted(list_of_points, key=my_sorting_function, reverse = True)
 
 def furthest_right_point(list_of_points):
     """Given a list of 2D points (represented as Point objects), uses "max" with
     the "key" argument to return the point that is furthest to the right (that
     is, the point with the largest X coordinate)."""
-    raise NotImplementedError
+    my_sorting_function = lambda point: point.getX()
+    return max(list_of_points, key=my_sorting_function)
 
 
 #### SURVEY ####################################################################
@@ -212,6 +211,6 @@ PYTHON_EXPERIENCE = "B"
 # The first three are required in order to receive full credit for your lab.
 
 NAME = "Monica Mladenik"
-COLLABORATORS = None
-HOW_MANY_HOURS_THIS_LAB_TOOK = None
+COLLABORATORS = "None"
+HOW_MANY_HOURS_THIS_LAB_TOOK = "3"
 SUGGESTIONS = None #optional
