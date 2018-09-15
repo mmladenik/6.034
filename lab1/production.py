@@ -180,7 +180,7 @@ class IF(object):
                 try:
                     delete_datum = populate(d, k)
                     new_data_set.remove(delete_datum) # Throws KeyError if failure
-                    new_data.append(new_datum)
+                    new_data.remove(delete_datum)
                     old_data_count = len(new_data_set) #update old_data_count
                     rule_fired = True
                     if verbose >= 1:
@@ -210,7 +210,7 @@ class IF(object):
         # Note that while _conditional points to a string, an AND, or an OR;
         #  _action points to a THEN(___) instead of just the ___. From a data
         #  science perspective this may be correct, but from a semantic standpoint
-        #  this wouldn't hold up in court: After all, in "IF P, THEN Q", P is 
+        #  this wouldn't hold up in court: After all, in "IF P, THEN Q", P is
         #  the antecedent, not "IF P". So why should "THEN Q" be labeled as the
         #  consequent? Anyway, because in this lab, all antecedents are single
         #  items, just return _action[0] instead of _action as the consequent.
@@ -460,16 +460,16 @@ def pretty_goal_tree(tree, ind=0, use_ind=False, end="\n"):
         unindented_header = "{}( ".format(class_name, ind)
         indented_header = (net_ind * " ") + unindented_header
         pretty_goal_tree(indented_header, ind, False, end="")
-       
+
         # Indentation of children
         sub_ind = ind + len(unindented_header)
 
-        conditions = list(tree) 
+        conditions = list(tree)
         if conditions == []:
             pretty_goal_tree(" )", ind, False)
             return
 
-        # Recursive step 
+        # Recursive step
         if len(conditions) == 1:
             pretty_goal_tree(conditions[0], sub_ind, False, end="")
             pretty_goal_tree(" )", sub_ind, False, end=end)

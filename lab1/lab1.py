@@ -10,24 +10,24 @@ pprint = pp.pprint
 
 #### Part 1: Multiple Choice #########################################
 
-ANSWER_1 = ''
+ANSWER_1 = '2'
 
-ANSWER_2 = ''
+ANSWER_2 = '4'
 
-ANSWER_3 = ''
+ANSWER_3 = '2'
 
-ANSWER_4 = ''
+ANSWER_4 = '0'
 
-ANSWER_5 = ''
+ANSWER_5 = '3'
 
-ANSWER_6 = ''
+ANSWER_6 = '1'
 
-ANSWER_7 = ''
+ANSWER_7 = '0'
 
 #### Part 2: Transitive Rule #########################################
 
-# Fill this in with your rule 
-transitive_rule = IF( AND( ), THEN( ) )
+# Fill this in with your rule
+transitive_rule = IF( AND('(?x) beats (?y)', '(?y) beats (?z)' ), THEN( '(?x) beats (?z)' ))
 
 # You can test your rule by uncommenting these pretty print statements
 #  and observing the results printed to your screen after executing lab1.py
@@ -39,13 +39,17 @@ transitive_rule = IF( AND( ), THEN( ) )
 #### Part 3: Family Relations #########################################
 
 # Define your rules here. We've given you an example rule whose lead you can follow:
-friend_rule = IF( AND("person (?x)", "person (?y)"), THEN ("friend (?x) (?y)", "friend (?y) (?x)") )
-
-
-
+# friend_rule = IF( AND("person (?x)", "person (?y)"), THEN ("friend (?x) (?y)", "friend (?y) (?x)") )
+identity_rule = IF('person (?x)', THEN('self (?x) (?x)'))
+child_rule = IF( AND("parent (?x) (?y)"), THEN("child (?y) (?x)"))
+sibling_rule = IF(AND('parent (?x) (?y)', 'parent (?x) (?z)', NOT('self (?y) (?z)')), THEN('sibling (?y) (?z)'))
+grandparent_rule = IF( AND('parent (?x) (?y)', 'parent (?y) (?z)'), THEN('grandparent (?x) (?z)', 'grandchild (?z) (?x)'))
+cousin_rule = IF(AND('parent (?w) (?x)', 'parent (?y) (?z)', 'sibling (?w) (?y)'), THEN('cousin (?x) (?z)','cousin (?z) (?x)'))
+# delete_rule =
 
 # Add your rules to this list:
-family_rules = [ friend_rule ]
+family_rules = [ identity_rule, child_rule, sibling_rule, grandparent_rule, cousin_rule ]
+# family_rules = [sibling_rule ]
 
 # Uncomment this to test your data on the Simpsons family:
 # pprint(forward_chain(family_rules, simpsons_data, verbose=False))
@@ -92,7 +96,7 @@ def backchain_to_goal_tree(rules, hypothesis):
 
 #### Survey #########################################
 
-NAME = None
+NAME = "Monica Mladenik"
 COLLABORATORS = None
 HOW_MANY_HOURS_THIS_LAB_TOOK = None
 WHAT_I_FOUND_INTERESTING = None

@@ -50,7 +50,7 @@ class NoClobberDict(DictMixin):
 AIRegex = re.compile(r'\(\?(\S+)\)')
 
 def AIStringToRegex(AIStr):
-    return AIRegex.sub( r'(?P<\1>\S+)', AIStr )+'$'
+    return AIRegex.sub( r'(?P<\1>\\S+)', AIStr )+'$'
 
 def AIStringToPyTemplate(AIStr):
     return AIRegex.sub( r'%(\1)s', AIStr )
@@ -59,4 +59,3 @@ def AIStringVars(AIStr):
     # This is not the fastest way of doing things, but
     # it is probably the most explicit and robust
     return set([ AIRegex.sub(r'\1', x) for x in AIRegex.findall(AIStr) ])
-
