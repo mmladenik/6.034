@@ -84,8 +84,8 @@ def match(template, AIStr):
     AIStr, or None if no such set exists.
     """
     try:
-        return re.match( AIStringToRegex(template),
-                         AIStr ).groupdict()
+        return re.match(AIStringToRegex(template),
+                         AIStr).groupdict()
     except AttributeError: # The re.match() expression probably
                            # just returned None
         return None

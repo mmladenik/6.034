@@ -41,15 +41,13 @@ transitive_rule = IF( AND('(?x) beats (?y)', '(?y) beats (?z)' ), THEN( '(?x) be
 # Define your rules here. We've given you an example rule whose lead you can follow:
 # friend_rule = IF( AND("person (?x)", "person (?y)"), THEN ("friend (?x) (?y)", "friend (?y) (?x)") )
 identity_rule = IF('person (?x)', THEN('self (?x) (?x)'))
-child_rule = IF( AND("parent (?x) (?y)"), THEN("child (?y) (?x)"))
+child_rule = IF('parent (?x) (?y)', THEN('child (?y) (?x)'))
 sibling_rule = IF(AND('parent (?x) (?y)', 'parent (?x) (?z)', NOT('self (?y) (?z)')), THEN('sibling (?y) (?z)'))
 grandparent_rule = IF( AND('parent (?x) (?y)', 'parent (?y) (?z)'), THEN('grandparent (?x) (?z)', 'grandchild (?z) (?x)'))
 cousin_rule = IF(AND('parent (?w) (?x)', 'parent (?y) (?z)', 'sibling (?w) (?y)'), THEN('cousin (?x) (?z)','cousin (?z) (?x)'))
-# delete_rule =
 
 # Add your rules to this list:
 family_rules = [ identity_rule, child_rule, sibling_rule, grandparent_rule, cousin_rule ]
-# family_rules = [sibling_rule ]
 
 # Uncomment this to test your data on the Simpsons family:
 # pprint(forward_chain(family_rules, simpsons_data, verbose=False))
@@ -87,17 +85,30 @@ def backchain_to_goal_tree(rules, hypothesis):
     (possibly with unbound variables), *not* AND or OR objects.
     Make sure to use simplify(...) to flatten trees where appropriate.
     """
-    raise NotImplementedError
-
+    hyp = OR([hypothesis])
+    for rule in rules:
+        # for consequent in rule.consequent():
+            m = match(rule.consequent(),hypothesis)
+            if m is not None:
+                # good_consequent = populate(consequents, m)
+                antecedents = rule.antecedent()
+                if isinstance(antecedents, str):
+                    antecedents = [antecedents]
+                antecedent = [backchain_to_goal_tree(rules, populate(a, m)) for a in antecedents]
+                if isinstance(antecedents, OR):
+                    hyp.append(OR(antecedent))
+                else:
+                    hyp.append(AND(antecedent))
+    return simplify(hyp)
 
 # Uncomment this to test out your backward chainer:
-# pretty_goal_tree(backchain_to_goal_tree(zookeeper_rules, 'opus is a penguin'))
+pretty_goal_tree(backchain_to_goal_tree(zookeeper_rules, 'opus is a penguin'))
 
 
 #### Survey #########################################
 
 NAME = "Monica Mladenik"
-COLLABORATORS = None
+COLLABORATORS = ""
 HOW_MANY_HOURS_THIS_LAB_TOOK = None
 WHAT_I_FOUND_INTERESTING = None
 WHAT_I_FOUND_BORING = None
